@@ -1,31 +1,46 @@
 <!DOCTYPE html>
-<html>
-  <body>
-    <div id="loginScreen">
-      <h2>Login</h2>
-      <input id="username" placeholder="Username"><br>
-      <input id="password" type="password" placeholder="Password"><br>
-      <button onclick="doLogin()">Login</button>
-      <p id="loginStatus"></p>
-    </div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Secure Login Page</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      color: #fff;
+      font-family: sans-serif;
+    }
 
-    <div id="mainContent" style="display:none">
-      <h1>Welcome!</h1>
-      <p>You’re logged in!</p>
-    </div>
+    #loginScreen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #111;
+      z-index: 9999;
+    }
 
-    <script>
-      function doLogin() {
-        const user = document.getElementById("username").value;
-        const pass = document.getElementById("password").value;
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      outline: none;
+      border-radius: 5px;
+    }
 
-        if (user === "admin" && pass === "1234") {
-          document.getElementById("loginScreen").style.display = "none";
-          document.getElementById("mainContent").style.display = "block";
-        } else {
-          document.getElementById("loginStatus").textContent = "Wrong login.";
-        }
-      }
-    </script>
-  </body>
-</html>
+    button {
+      background: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    #mainContent {
+      display: none;
+    }
