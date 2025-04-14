@@ -44,3 +44,49 @@
     #mainContent {
       display: none;
     }
+  </style>
+</head>
+<body>
+  <div id="loginScreen">
+    <h2>Login</h2>
+    <input id="username" placeholder="Username" /><br />
+    <input id="password" type="password" placeholder="Password" /><br />
+    <button onclick="doLogin()">Login</button>
+    <p id="loginStatus"></p>
+  </div>
+
+  <div id="mainContent">
+    <!-- ⬇️ PASTE YOUR SITE CONTENT HERE ⬇️ -->
+    <h1>Welcome to My Site</h1>
+    <p>This is your real website. Only visible after login.</p>
+    <!-- ⬆️ REPLACE THIS BLOCK WITH YOUR SITE HTML ⬆️ -->
+  </div>
+
+  <script>
+    const hardcodedUsername = "admin";
+    const hardcodedPasswordHash = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4"; // SHA-256 of "1234"
+
+    async function hashPassword(password) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(password);
+      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+      return Array.from(new Uint8Array(hashBuffer))
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+    }
+
+    async function doLogin() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+      const hashed = await hashPassword(pass);
+
+      if (user === hardcodedUsername && hashed === hardcodedPasswordHash) {
+        document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+      } else {
+        document.getElementById("loginStatus").textContent = "❌ Wrong login.";
+      }
+    }
+  </script>
+</body>
+</html>
