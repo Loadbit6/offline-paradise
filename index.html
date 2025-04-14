@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Your Site Title</title>
+  <title>Test Login</title>
   <style>
+    body.locked *:not(#loginScreen) {
+      display: none !important;
+    }
+
     #loginScreen {
       position: fixed;
       inset: 0;
-      background: #111;
+      background: #222;
       color: white;
       display: flex;
       flex-direction: column;
@@ -16,14 +20,14 @@
       z-index: 9999;
     }
 
-    body.locked *:not(#loginScreen) {
-      display: none !important;
+    input, button {
+      margin: 5px;
+      padding: 10px;
+      font-size: 16px;
     }
   </style>
 </head>
 <body class="locked">
-
-  <!-- 🔐 LOGIN GATE -->
   <div id="loginScreen">
     <h2>Login</h2>
     <input id="username" type="text" placeholder="Username"><br>
@@ -32,16 +36,193 @@
     <p id="loginStatus"></p>
   </div>
 
-  <!-- ⬇️⬇️ PASTE YOUR ENTIRE SITE BELOW THIS LINE ⬇️⬇️ -->
   <div id="mainContent">
-    <!-- Example placeholder content -->
-    <!-- 🟡 REPLACE THIS WITH YOUR FULL ORIGINAL INDEX.HTML BODY CONTENT -->
-    <h1>Welcome to my site!</h1>
-    <p>This is the actual content that should load after login.</p>
-    <!-- 🟡 Your scripts, styles, images, everything goes here -->
+    <h1>You’re in!</h1>
+    <p>This content is hidden until you log in.</p>
   </div>
-  <!-- ⬆️⬆️ END OF WHERE TO PASTE ⬆️⬆️ -->
 
-  <script src="auth.js"></script>
+  <script>
+    async function hashPassword(password) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(password);
+      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+      return Array.from(new Uint8Array(hashBuffer))
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+    }
+
+    async function checkLogin(inputUsername, inputPassword) {
+      const res = await fetch("https://yourusername.github.io/shared-auth/login.json");
+      const data = await res.json();
+      const inputHash = await hashPassword(inputPassword);
+      return inputUsername === data.username && inputHash === data.passwordHash;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("loginBtn").onclick = async () => {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const success = await checkLogin(username, password);
+        if (success) {
+          document.body.classList.remove("locked");
+          document.getElementById("loginScreen").remove();
+        } else {
+          document.getElementById("loginStatus").innerText = "❌ Login failed.";
+        }
+      };
+    });
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Test Login</title>
+  <style>
+    body.locked *:not(#loginScreen) {
+      display: none !important;
+    }
+
+    #loginScreen {
+      position: fixed;
+      inset: 0;
+      background: #222;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    input, button {
+      margin: 5px;
+      padding: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body class="locked">
+  <div id="loginScreen">
+    <h2>Login</h2>
+    <input id="username" type="text" placeholder="Username"><br>
+    <input id="password" type="password" placeholder="Password"><br>
+    <button id="loginBtn">Login</button>
+    <p id="loginStatus"></p>
+  </div>
+
+  <div id="mainContent">
+    <h1>You’re in!</h1>
+    <p>This content is hidden until you log in.</p>
+  </div>
+
+  <script>
+    async function hashPassword(password) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(password);
+      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+      return Array.from(new Uint8Array(hashBuffer))
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+    }
+
+    async function checkLogin(inputUsername, inputPassword) {
+      const res = await fetch("https://yourusername.github.io/shared-auth/login.json");
+      const data = await res.json();
+      const inputHash = await hashPassword(inputPassword);
+      return inputUsername === data.username && inputHash === data.passwordHash;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("loginBtn").onclick = async () => {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const success = await checkLogin(username, password);
+        if (success) {
+          document.body.classList.remove("locked");
+          document.getElementById("loginScreen").remove();
+        } else {
+          document.getElementById("loginStatus").innerText = "❌ Login failed.";
+        }
+      };
+    });
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Test Login</title>
+  <style>
+    body.locked *:not(#loginScreen) {
+      display: none !important;
+    }
+
+    #loginScreen {
+      position: fixed;
+      inset: 0;
+      background: #222;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    input, button {
+      margin: 5px;
+      padding: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body class="locked">
+  <div id="loginScreen">
+    <h2>Login</h2>
+    <input id="username" type="text" placeholder="Username"><br>
+    <input id="password" type="password" placeholder="Password"><br>
+    <button id="loginBtn">Login</button>
+    <p id="loginStatus"></p>
+  </div>
+
+  <div id="mainContent">
+    <h1>You’re in!</h1>
+    <p>This content is hidden until you log in.</p>
+  </div>
+
+  <script>
+    async function hashPassword(password) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(password);
+      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+      return Array.from(new Uint8Array(hashBuffer))
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+    }
+
+    async function checkLogin(inputUsername, inputPassword) {
+      const res = await fetch("https://yourusername.github.io/shared-auth/login.json");
+      const data = await res.json();
+      const inputHash = await hashPassword(inputPassword);
+      return inputUsername === data.username && inputHash === data.passwordHash;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("loginBtn").onclick = async () => {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const success = await checkLogin(username, password);
+        if (success) {
+          document.body.classList.remove("locked");
+          document.getElementById("loginScreen").remove();
+        } else {
+          document.getElementById("loginStatus").innerText = "❌ Login failed.";
+        }
+      };
+    });
+  </script>
 </body>
 </html>
