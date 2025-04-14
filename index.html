@@ -1,8 +1,41 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Site Title</title>
+  <style>
+    #loginScreen {
+      position: fixed;
+      inset: 0;
+      background: #111;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    body.locked *:not(#loginScreen) {
+      display: none !important;
+    }
+  </style>
+</head>
+<body class="locked">
+
+  <!-- 🔐 LOGIN GATE -->
+  <div id="loginScreen">
+    <h2>Login</h2>
+    <input id="username" type="text" placeholder="Username"><br>
+    <input id="password" type="password" placeholder="Password"><br>
+    <button id="loginBtn">Login</button>
+    <p id="loginStatus"></p>
+  </div>
+
     <head>
         <title>Offline Paradise | 3kh0</title>
         <script src="/js/main.js"></script>
-    </head>
+    </head> 
     <body style="-webkit-user-select: none; user-select: none; overscroll: none; overflow: hidden; border: none; margin: none; padding: none;">
         <meta charset="utf-8" />
         <style>
@@ -2380,5 +2413,7 @@
                 await h.wb(new Zb(0));
             });
         </script>
-    </body>
+
+  <script src="auth.js"></script>
+</body>
 </html>
