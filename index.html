@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>Login Test</title>
-  <style>
-    body.locked *:not(#loginScreen) {
-      display: none !important;
-    }
+  <body>
+    <div id="loginScreen">
+      <h2>Login</h2>
+      <input id="username" placeholder="Username"><br>
+      <input id="password" type="password" placeholder="Password"><br>
+      <button onclick="doLogin()">Login</button>
+      <p id="loginStatus"></p>
+    </div>
 
-    #loginScreen {
-      position: fixed;
-      inset: 0;
-      background: #111;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
+    <div id="mainContent" style="display:none">
+      <h1>Welcome!</h1>
+      <p>You’re logged in!</p>
+    </div>
 
-    input, button {
-      padding: 10px;
-      margin:
+    <script>
+      function doLogin() {
+        const user = document.getElementById("username").value;
+        const pass = document.getElementById("password").value;
+
+        if (user === "admin" && pass === "1234") {
+          document.getElementById("loginScreen").style.display = "none";
+          document.getElementById("mainContent").style.display = "block";
+        } else {
+          document.getElementById("loginStatus").textContent = "Wrong login.";
+        }
+      }
+    </script>
+  </body>
+</html>
